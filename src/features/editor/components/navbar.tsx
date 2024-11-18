@@ -3,16 +3,28 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Logo } from "./logo";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, Download, MousePointerClick, Redo2, Undo2, Undo2Icon } from "lucide-react";
+import { ChevronDown, Download, MousePointerClick, Redo2, Undo2 } from "lucide-react";
 import { CiFileOn } from "react-icons/ci";
 import { Separator } from "@/components/ui/separator";
 import { Hint } from "@/components/hint";
 import { BsCloudCheck, BsFiletypeJpg, BsFiletypeJson, BsFiletypePng, BsFiletypeSvg } from "react-icons/bs";
-import { SiJpeg } from "react-icons/si";
-import { TbPng } from "react-icons/tb";
+import { ActiveTool } from "../types";
+import { cn } from "@/lib/utils";
 
-export const Navbar = () => {
+interface NavbarProps {
+   activeTool: ActiveTool;
+   onChangeActiveTool: (tool: ActiveTool) => void;
+}
+
+
+export const Navbar = ({
+   activeTool,
+   onChangeActiveTool,
+}: NavbarProps) => {
    return (
+
+
+
       <nav className="w-full flex items-center p-4 h-[68px] gap-x-8 border-b lg:pl-[34px]">
          <Logo/>
          <div className="w-full flex items-center gap-x-1 h-full">
@@ -43,8 +55,8 @@ export const Navbar = () => {
                <Button
                   variant={"ghost"}
                   size={"icon"}
-                  onClick={()=>{}}
-                  className=""
+                  onClick={()=> onChangeActiveTool("select")}
+                  className={cn(activeTool === "select" && "bg-red-100") }
                >
                   <MousePointerClick/>
                </Button>
@@ -53,8 +65,7 @@ export const Navbar = () => {
                <Button
                   variant={"ghost"}
                   size={"icon"}
-                  onClick={()=>{}}
-                  className=""
+                  onClick={()=> {}}
                >
                   <Undo2/>
                </Button>
