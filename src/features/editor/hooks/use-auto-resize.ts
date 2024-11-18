@@ -1,3 +1,5 @@
+"use client"
+
 import { useCallback, useEffect } from "react";
 import { fabric } from "fabric";
 
@@ -33,7 +35,6 @@ export const useAutoResize = ({
       const zoom = zoomRatio * scale;
 
       canvas.setViewportTransform(fabric.iMatrix.concat());
-
       canvas.zoomToPoint(new fabric.Point(center.left, center.top), zoom);
 
       if(!localWorkspace) return;
