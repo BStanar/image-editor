@@ -1,6 +1,6 @@
 "use client"
 
-import { ImageIcon, LayoutTemplate, LayoutTemplateIcon, PencilIcon, SettingsIcon, ShapesIcon, SparkleIcon, SparklesIcon, TypeIcon } from "lucide-react";
+import { ImageIcon, LayoutTemplateIcon, SettingsIcon, ShapesIcon, SparklesIcon, TypeIcon } from "lucide-react";
 import { SidebarItem } from "./sidebar-item";
 import { ActiveTool } from "../types";
 

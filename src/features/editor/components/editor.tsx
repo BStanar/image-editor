@@ -8,6 +8,7 @@ import { Sidebar } from "./sidebar";
 import { Toolbar } from "./toolbar";
 import { Footer } from "./footer";
 import { ActiveTool } from "../types";
+import { ShapesSidebar } from "./shape-sidebar";
 
 export const EditorComponent = () => {
 
@@ -60,6 +61,10 @@ export const EditorComponent = () => {
             <Sidebar 
                onChangeActiveTool={onChangeAactiveTool}
                activeTool={activeTool}/>
+            <ShapesSidebar
+               onChangeActiveTool={onChangeAactiveTool}
+               activeTool={activeTool}/>
+            
             <main className="bg-muted flex-1 overflow-auto relative flex flex-col">
                <Toolbar/>
                <div className="flex-1 h-[calc(100%-124px)] bg-muted" ref={containerRef}>
