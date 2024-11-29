@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { ActiveTool } from "../types"
+import { ActiveTool, Editor } from "../types"
 import { ToolSidebarHeader } from "./tool-sidebar-header";
 import { ToolSidebarClose } from "./tool-sidebar-close";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -12,9 +12,11 @@ interface ShapeSidebarProps {
    
    onChangeActiveTool: (tool: ActiveTool) => void;
    activeTool: ActiveTool;
+   editor: Editor | undefined;
 }
 
 export const ShapesSidebar= ({
+   editor,
    onChangeActiveTool,
    activeTool,
 }:ShapeSidebarProps) => {
@@ -40,28 +42,28 @@ return (
       <ScrollArea>
          <div className="grid grid-cols-3 gap-4 p-4">
          <ShapeTool
-               onClick={()=> {}}
+               onClick={()=> editor?.addCircle()}
                icon={FaCircle}
             />
             <ShapeTool
-               onClick={()=> {}}
+               onClick={()=> editor?.addSoftRectangle()}
                icon={FaSquare}
             />
             <ShapeTool
-               onClick={()=> {}}
+               onClick={()=> editor?.addRectangle()}
                icon={FaSquareFull}
             />
             <ShapeTool
-               onClick={()=> {}}
+               onClick={()=> editor?.addTriangle()}
                icon={IoTriangle}
             />
             <ShapeTool
-               onClick={()=> {}}
+               onClick={()=> editor?.addTriangleInverse()}
                icon={IoTriangle}
                iconClassName="rotate-180"
             />
             <ShapeTool
-               onClick={()=> {}}
+               onClick={()=> editor?.addDiamond()}
                icon={FaDiamond}
             />
             

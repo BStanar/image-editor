@@ -1,9 +1,10 @@
-import { EditorComponent } from "@/features/editor/components/editor";
+import { Editor } from "@/features/editor/components/editor";
+
 
 const EditorProjectIdPage = () => {
    return(
       <div className="h-full"> 
-         <EditorComponent/>
+         <Editor/>
       </div>
    );
 };

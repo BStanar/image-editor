@@ -89,7 +89,7 @@ export const Navbar = ({
             </div>
             <div className="ml-auto flex items-center gap-x-4">
                <DropdownMenu modal={false}>
-                  <DropdownMenuTrigger>
+                  <DropdownMenuTrigger asChild>
                      <Button variant={"ghost"} size={"sm"}>
                         Export
                         <Download className="size-4 ml-4"/>
