@@ -1,5 +1,6 @@
 import { fabric } from "fabric";
 import * as material from "material-colors";
+
 export const selectionDependentTools = [
   "fill",
   "font",
@@ -9,6 +10,7 @@ export const selectionDependentTools = [
   "stroke-color",
   "stroke-width",
 ];
+
 export const colors = [
   material.red["500"],
   material.pink["500"],
@@ -42,10 +44,12 @@ export type ActiveTool =
   | "stroke-width"
   | "font"
   | "opacity"
+  | "forward"
+  | "backward"
   | "filter"
+  | "settings"
   | "ai"
   | "remove-bg"
-  | "settings"
   | "templates";
 
 export const FILL_COLOR = "rgba(0,0,0,1)";
@@ -114,19 +118,28 @@ export type BuildEditorProps = {
 };
 
 export interface Editor {
+  changeOpacity: (value: number) => void;
+
+  bringForward: () => void;
+  sendBackward: () => void;
+
   changeFillColor: (value: string) => void;
   changeStrokeWidth: (value: number) => void;
   changeStrokeColor: (value: string) => void;
   changeStrokeDashArray: (vlaue: number[]) => void;
+
   addCircle: () => void;
   addSoftRectangle: () => void;
   addRectangle: () => void;
   addTriangle: () => void;
   addInverseTriangle: () => void;
   addDiamond: () => void;
+
   canvas: fabric.Canvas;
+
   getActiveFillColor: () => string;
   getActiveStrokeColor: () => string;
+  getActiveOpacity: () => number;
   getActiveStrokeWidth: () => number;
   getActiveStrokeDashArray: () => number[];
   

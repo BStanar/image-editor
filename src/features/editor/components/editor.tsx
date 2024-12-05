@@ -12,6 +12,7 @@ import { Toolbar } from "./toolbar";
 import { Footer } from "./footer";
 import { Sidebar } from "./sidebar";
 import { StrokeWidthSidebar } from "./stroke-width-sidebar";
+import { OpacitySidebar } from "./opacity-sidebar";
 
 
 export const Editor = () => {
@@ -89,6 +90,12 @@ export const Editor = () => {
           onChangeActiveTool={onChangeActiveTool}
         />
         <StrokeWidthSidebar
+          editor={editor}
+          activeTool={activeTool}
+          onChangeActiveTool={onChangeActiveTool}
+        />
+        
+        <OpacitySidebar
           editor={editor}
           activeTool={activeTool}
           onChangeActiveTool={onChangeActiveTool}
