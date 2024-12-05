@@ -11,6 +11,7 @@ import { StrokeColorSidebar } from "./stroke-color-sidebar";
 import { Toolbar } from "./toolbar";
 import { Footer } from "./footer";
 import { Sidebar } from "./sidebar";
+import { StrokeWidthSidebar } from "./stroke-width-sidebar";
 
 
 export const Editor = () => {
@@ -83,6 +84,11 @@ export const Editor = () => {
           onChangeActiveTool={onChangeActiveTool}
         />
         <StrokeColorSidebar
+          editor={editor}
+          activeTool={activeTool}
+          onChangeActiveTool={onChangeActiveTool}
+        />
+        <StrokeWidthSidebar
           editor={editor}
           activeTool={activeTool}
           onChangeActiveTool={onChangeActiveTool}

@@ -1,9 +1,16 @@
 import { cn } from "@/lib/utils";
-import { ActiveTool, Editor, FILL_COLOR, STROKE_COLOR } from "../types"
-import { ToolSidebarHeader } from "./tool-sidebar-header";
-import { ToolSidebarClose } from "./tool-sidebar-close";
+
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { ColorPicker } from "./color-picker";
+
+import { 
+  ActiveTool, 
+  Editor, 
+  STROKE_COLOR 
+} from "@/features/editor/types"
+
+import { ToolSidebarHeader } from "@/features/editor/components/tool-sidebar-header";
+import { ToolSidebarClose } from "@/features/editor/components/tool-sidebar-close";
+import { ColorPicker } from "@/features/editor/components/color-picker";
 
 interface StrokeColorSidebarProps {
   editor: Editor | undefined;
