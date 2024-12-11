@@ -34,7 +34,7 @@ export const Sidebar = ({
             />
             <SidebarItem 
                icon={TypeIcon}
-               label="Type"
+               label="Text"
                isActive={activeTool === "text"}
                onClick={()=> onChangeActiveTool("text")}
             />
