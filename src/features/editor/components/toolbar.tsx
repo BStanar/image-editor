@@ -11,11 +11,12 @@ import {
   FONT_SIZE, 
   FONT_WEIGHT
 } from "@/features/editor/types"
-import { AlignCenter, AlignLeft, AlignRight, ArrowDown, ArrowUp, ChevronDown } from "lucide-react";
-import { isTextType } from "../utils";
+import { AlignCenter, AlignLeft, AlignRight, ArrowDown, ArrowUp, ChevronDown, Trash2 } from "lucide-react";
+import { isImageType, isTextType } from "../utils";
 import { FaBold, FaItalic, FaStrikethrough, FaUnderline } from "react-icons/fa";
 import { useState } from "react";
 import { FontSizeInput } from "./font-size-input";
+import { IoColorFilter } from "react-icons/io5";
 
 interface ToolbarProps {
   editor: Editor | undefined;
@@ -55,6 +56,7 @@ export const Toolbar = ({
   const selectedObjectType = editor?.selectedObjects[0]?.type;
   
   const isText= isTextType(selectedObjectType);
+  const isImage= isImageType(selectedObjectType);
 
   const toggleBold = () => {
     if(!selectedObjects){
@@ -143,21 +145,23 @@ export const Toolbar = ({
 
   return (
     <div className="shrink-0 h-[56px] border-b bg-white w-full flex items-center overflow-x-auto z-[49] p-2 gap-x-2">
-      <div className="flex items-center h-full justify-center">
-        <Hint label="Color" side="bottom" sideOffset={5}>
-          <Button
-            onClick={() => onChangeActiveTool("fill")}
-            size="icon"
-            variant="ghost"
-            className={cn(activeTool === "fill" && "bg-gray-100")}
-            >
-            <div
-              className="rounded-sm size-4 border"
-              style={{ backgroundColor: properties.fillColor }}
-              />
-          </Button>
-        </Hint>
-      </div>
+      {!isImage && (
+        <div className="flex items-center h-full justify-center">
+          <Hint label="Color" side="bottom" sideOffset={5}>
+            <Button
+              onClick={() => onChangeActiveTool("fill")}
+              size="icon"
+              variant="ghost"
+              className={cn(activeTool === "fill" && "bg-gray-100")}
+              >
+              <div
+                className="rounded-sm size-4 border"
+                style={{ backgroundColor: properties.fillColor }}
+                />
+            </Button>
+          </Hint>
+        </div>
+      )}
       {!isText && (
           <div className="flex items-center h-full justify-center">
             <Hint label="Stroke Color" side="bottom" sideOffset={5}>
@@ -324,6 +328,22 @@ export const Toolbar = ({
           </Hint>
         </div>
       )}
+      {isImage && (
+        <div className="flex items-center h-full justify-center">
+          <Hint label="Image filters" side="bottom" sideOffset={5}>
+            <Button
+              onClick={() => onChangeActiveTool("filter")}
+              size="icon"
+              variant="ghost"
+              className={cn(
+                activeTool === "filter" && "bg-gray-100"
+              )}
+            >
+              <IoColorFilter className="size-4"/>  
+            </Button>
+          </Hint>
+        </div>
+      )}
       {isText && (
         <div className="flex items-center h-full justify-center">
           <FontSizeInput
@@ -369,6 +389,19 @@ export const Toolbar = ({
             className={cn(activeTool === "opacity" && "bg-gray-100")}
             >
             <BsTransparency
+              className="size-4"
+              />  
+          </Button>
+        </Hint>
+      </div>
+      <div className="flex items-center h-full justify-center">
+        <Hint label="Delete" side="bottom" sideOffset={5}>
+          <Button
+            onClick={() => editor?.delete()}
+            size="icon"
+            variant="ghost"
+            >
+            <Trash2
               className="size-4"
               />  
           </Button>

@@ -12,6 +12,31 @@ export const selectionDependentTools = [
   "stroke-width",
 ];
 
+export const filters = [
+  "none",
+  "polaroid",
+  "sepia",
+  "kodachrome",
+  "contrast",
+  "brightness",
+  "greyscale",
+  "brownie",
+  "vintage",
+  "technicolor",
+  "pixelate",
+  "invert",
+  "blur",
+  "sharpen",
+  "emboss",
+  "removecolor",
+  "blacknwhite",
+  "vibrance",
+  "blendcolor",
+  "huerotate",
+  "resize",
+  "saturation",
+  "gamma",
+];
 export const colors = [
   material.red["500"],
   material.pink["500"],
@@ -155,6 +180,10 @@ export interface Editor {
   strokeWidth: number;
   selectedObjects: fabric.Object[];
 
+  delete: () => void;
+  
+   addImage: (value: string) => void;
+  changeImageFilter: (value: string) => void;
   addCircle: () => void;
   addSoftRectangle: () => void;
   addRectangle: () => void;

@@ -28,7 +28,7 @@ import {
    TRIANGLE_OPTIONS
 } from "@/features/editor/types";
 
-import { isTextType } from "@/features/editor/utils";
+import { createFilter, isTextType } from "@/features/editor/utils";
 import { useCanvasEvents } from "@/features/editor/hooks/use-canvas-events";
 
 const buildEditor = ({
@@ -67,6 +67,42 @@ const buildEditor = ({
       canvas,
       strokeWidth,
       selectedObjects,
+      addImage: (value: string) => {
+        fabric.Image.fromURL(
+          value,
+          (image) => {
+            const workspace = getWorkspace();
+
+            image.scaleToWidth(workspace?.width || 0);
+            image.scaleToHeight(workspace?.width || 0);
+
+            addToCanvas(image);
+          },
+          {
+            crossOrigin: "anonymous",
+          },
+        );
+      },
+      changeImageFilter:( value:string) => {
+        const objects = canvas.getActiveObjects();
+
+        objects.forEach((object)=> {
+          if(object.type === "image") {
+            const imageObject = object as fabric.Image;
+
+            const effect = createFilter(value);
+            
+            imageObject.filters = effect ? [effect] : [];
+            imageObject.applyFilters();
+            canvas.renderAll();
+          }
+        });
+      },
+      delete: () => {
+        canvas.getActiveObjects().forEach((object) => canvas.remove(object));
+        canvas.discardActiveObject();
+        canvas.renderAll();
+      },
       // Add elements to canvas
       addCircle: () => {
         const object = new fabric.Circle({
@@ -295,6 +331,7 @@ const buildEditor = ({
         
         return value;
       },
+      
       // Change element options
       changeOpacity: (value: number) => {
         canvas.getActiveObjects().forEach((object) => {
