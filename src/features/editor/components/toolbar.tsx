@@ -12,11 +12,12 @@ import {
   FONT_WEIGHT
 } from "@/features/editor/types"
 import { AlignCenter, AlignLeft, AlignRight, ArrowDown, ArrowUp, ChevronDown, Trash2 } from "lucide-react";
-import { isImageType, isTextType } from "../utils";
+import { isDrawingType, isImageType, isTextType } from "../utils";
 import { FaBold, FaItalic, FaStrikethrough, FaUnderline } from "react-icons/fa";
 import { useState } from "react";
 import { FontSizeInput } from "./font-size-input";
 import { IoColorFilter } from "react-icons/io5";
+import { FaCopy, FaPaste } from "react-icons/fa6";
 
 interface ToolbarProps {
   editor: Editor | undefined;
@@ -56,7 +57,10 @@ export const Toolbar = ({
   const selectedObjectType = editor?.selectedObjects[0]?.type;
   
   const isText= isTextType(selectedObjectType);
-  const isImage= isImageType(selectedObjectType);
+  const isImage= selectedObjectType === "image";
+  const isDrawing = selectedObjectType === "Path " || "path";
+
+  
 
   const toggleBold = () => {
     if(!selectedObjects){
@@ -145,7 +149,7 @@ export const Toolbar = ({
 
   return (
     <div className="shrink-0 h-[56px] border-b bg-white w-full flex items-center overflow-x-auto z-[49] p-2 gap-x-2">
-      {!isImage && (
+      {!isImage && !isDrawing && (
         <div className="flex items-center h-full justify-center">
           <Hint label="Color" side="bottom" sideOffset={5}>
             <Button
@@ -394,6 +398,20 @@ export const Toolbar = ({
           </Button>
         </Hint>
       </div>
+      <div className="flex items-center h-full justify-center">
+        <Hint label="Copy" side="bottom" sideOffset={5}>
+          <Button
+            onClick={() => {editor?.OnCopy(), editor?.OnPaste()}}
+            size="icon"
+            variant="ghost"
+            >
+            <FaCopy
+              className="size-4"
+              />  
+          </Button>
+        </Hint>
+      </div>
+      
       <div className="flex items-center h-full justify-center">
         <Hint label="Delete" side="bottom" sideOffset={5}>
           <Button

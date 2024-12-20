@@ -1,27 +1,30 @@
-import { unsplash } from "@/lib/unsplash";
-import {Hono} from "hono";
+import { Hono } from "hono";
 
-const DEFAULT_COUNT=15;
-const DEFAULT_COLLECTON_IDS = ["317099"];
+import { unsplash } from "@/lib/unsplash";
+
+const DEFAULT_COUNT = 50;
+const DEFAULT_COLLECTION_IDS = ["317099"];
 
 const app = new Hono()
-   .get("/",async (c) => {
+  .get("/", async (c) => {
       const images = await unsplash.photos.getRandom({
-         collectionIds: DEFAULT_COLLECTON_IDS,
+         collectionIds: DEFAULT_COLLECTION_IDS,
          count: DEFAULT_COUNT,
       });
 
-      if(images.errors){
-         return c.json({error: "Something went wrong with collecting images"}, 400);
+      if (images.errors) {
+         return c.json({ error: "Something went wrong" }, 400);
+         console.log("Error in getting messages");
       }
-
+      
+      console.log("Getting messages");
       let response = images.response;
 
-      if (!Array.isArray(response)){
+      if (!Array.isArray(response)) {
          response = [response];
       }
 
-      return c.json({data: response });
-   });
+      return c.json({ data: response });
+  });
 
 export default app;

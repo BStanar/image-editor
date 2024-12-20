@@ -6,6 +6,7 @@ export const Logo = () => {
       <Link href="/">
          <div className="w-[120px] h-[35px] relative shrink-0">
             <Image
+               priority
                src="/logo.svg"
                fill
                alt="logo image"

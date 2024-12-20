@@ -7,6 +7,9 @@ export function isTextType(type: string | undefined) {
 export function isImageType(type: string | undefined) {
   return type === "image" || type === "i-image" || type === "textbox";
 };
+export function isDrawingType(type: string | undefined) {
+  return type === "draw" || type === "textbox";
+};
   
 export function rgbaObjectToStr(rgba: RGBColor | "transparent") {
   if (rgba === "transparent") {

@@ -30,6 +30,7 @@ import {
 
 import { createFilter, isTextType } from "@/features/editor/utils";
 import { useCanvasEvents } from "@/features/editor/hooks/use-canvas-events";
+import { useClipboard } from "./use-clipboard";
 
 const buildEditor = ({
    canvas,
@@ -44,6 +45,9 @@ const buildEditor = ({
    setStrokeWidth,
    setStrokeDashArray,
    setFontFamily,
+   copy,
+   paste,
+   autoZoom, 
   }: BuildEditorProps): Editor => {
     
     const getWorkspace = () => {
@@ -67,6 +71,56 @@ const buildEditor = ({
       canvas,
       strokeWidth,
       selectedObjects,
+      getWorkspace,
+      autoZoom,
+      zoomIn: () => {
+        let zoomRatio = canvas.getZoom();
+        zoomRatio += 0.05;
+        const center=canvas.getCenter();
+
+        canvas.zoomToPoint(
+          new fabric.Point( center.left, center.top),
+          zoomRatio
+        )
+      },
+      zoomOut: () => {
+        let zoomRatio = canvas.getZoom();
+        zoomRatio -= 0.05;
+        const center=canvas.getCenter();
+
+        canvas.zoomToPoint(
+          new fabric.Point( center.left, center.top),
+          zoomRatio < 0.2 ? 0.2 : zoomRatio,
+        )
+      },
+      
+      changeSize: (value: {width:number, height: number}) => {
+        const workspace=getWorkspace();
+
+        workspace?.set(value);
+        autoZoom();
+        //TODO: Save
+      },
+      changeBackground:(value: string) => {
+        const workspace=getWorkspace();
+        workspace?.set({fill: value});
+        canvas.renderAll();
+        //TODO: Save
+
+      }, 
+      enableDrawingMode: () => {
+        canvas.discardActiveObject();
+        canvas.renderAll();
+        canvas.isDrawingMode = true;
+        canvas.freeDrawingBrush.width = strokeWidth;
+        canvas.freeDrawingBrush.color = strokeColor;
+
+      },
+      disableDrawingMode: () => {
+        canvas.isDrawingMode = false;
+      },
+      OnCopy: () => copy(),
+      OnPaste: () => paste(),
       addImage: (value: string) => {
         fabric.Image.fromURL(
           value,
@@ -372,6 +426,8 @@ const buildEditor = ({
         canvas.getActiveObjects().forEach((object) => {
           object.set({ strokeWidth: value });
         });
+        
+        canvas.freeDrawingBrush.width = value;
         canvas.renderAll();
       },    
       changeStrokeDashArray: (value: number[]) => {
@@ -391,6 +447,8 @@ const buildEditor = ({
           }
           object.set({ stroke: value });
         });
+        
+        canvas.freeDrawingBrush.color = strokeColor;
         canvas.renderAll();
       },
       changeFontFamily: (value: string) => {
@@ -477,7 +535,12 @@ export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
   const [fontFamily, setFontFamily] = useState(FONT_FAMILY);
   const [strokeDashArray, setStrokeDashArray] = useState<number[]>(STROKE_DASH_ARRAY);
   
-  useAutoResize({ canvas, container });
+  const { copy, paste } = useClipboard({ canvas });
+
+  const { autoZoom } =useAutoResize({ 
+    canvas, 
+    container 
+  });
   
   useCanvasEvents({
     canvas,
@@ -499,11 +562,17 @@ export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
         setStrokeDashArray,
         fontFamily, 
         setFontFamily,
+        copy,
+        paste,
+        autoZoom,
       });
     }
     
     return undefined;
   }, [
+    copy,
+    paste,
+    autoZoom,
     canvas, 
     fillColor, 
     strokeColor, 

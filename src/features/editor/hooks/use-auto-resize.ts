@@ -77,4 +77,6 @@ export const useAutoResize = ({
          }
       }
    }, [canvas,container, autoZoom]);
+
+   return {autoZoom};
 } 

@@ -30,7 +30,6 @@ export const ImageSidebar = ({
     onChangeActiveTool("select");
   };
   
-  
   return (
     <aside
     className={cn(
