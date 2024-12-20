@@ -12,6 +12,17 @@ export const selectionDependentTools = [
   "stroke-width",
 ];
 
+export const JSON_KEYS = [
+  "name",
+  "gradientAngle",
+  "selectable",
+  "hasControls",
+  "linkData",
+  "editable",
+  "extensionType",
+  "extension"
+];
+
 export const filters = [
   "none",
   "polaroid",
@@ -163,6 +174,11 @@ export type BuildEditorProps = {
   autoZoom: () => void,
   copy: () => void,
   paste: () => void,
+  save: (skip?: boolean) => void,
+  undo: () => void,
+  redo: () => void,
+  canUndo: () => boolean,
+  canRedo: () => boolean,
 
   fillColor: string;
   strokeColor: string;
@@ -185,8 +201,14 @@ export interface Editor {
   selectedObjects: fabric.Object[];
   autoZoom: () => void,
   zoomIn: () => void,
-  zoomOut: () => void,
+  zoomOut: () =>  void,
   getWorkspace:() => fabric.Object | undefined;
+  
+  canUndo: () => boolean,
+  canRedo: () => boolean,
+  
+  onUndo: () =>  void,
+  onRedo: () =>  void,
 
   changeSize: (value: {width:number, height: number}) => void;
   changeBackground: (value: string) => void;
