@@ -11,7 +11,6 @@ export const runtime = "nodejs";
 
 
 const app = new Hono().basePath("/api");
-
 const routes = app
 .route("/ai", ai)
 .route("/images", images);

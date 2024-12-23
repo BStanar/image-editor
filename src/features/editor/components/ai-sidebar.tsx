@@ -26,12 +26,11 @@ export const AiSidebar = ({
   const mutation = useGenerateImage();
 
   const [value, setValue] = useState("");
-//@ts-ignore TO DO: Fix bux, can make a api request, the image is generated, but no response
   const onSubmit = (
     e: React.FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
-    mutation.mutate({ prompt: value }, {
+    /*mutation.mutate({ prompt: value }, {
       onSuccess: ({ data }) => {
         console.log("Response from backend:", data); // Log the backend response
         editor?.addImage(data);
@@ -39,7 +38,7 @@ export const AiSidebar = ({
       onError: (error) => {
         console.error("API call failed:", error); // Log any errors
       },
-    });
+    });*/
     
   };
 
@@ -60,7 +59,7 @@ export const AiSidebar = ({
       />
       <ScrollArea>
         
-        <form onSubmit={()=>{}} className="p-4 space-y-6">
+        <form onSubmit={onSubmit} className="p-4 space-y-6">
           <Textarea
             disabled={mutation.isPending}
             placeholder="An astronaut riding a horse on mars, hd, dramatic lighting"

@@ -2,7 +2,6 @@ import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
 
 const f = createUploadthing();
-//@ts-ignore
 const auth = (_req: Request) => ({ id: "fakeId" });
 
 

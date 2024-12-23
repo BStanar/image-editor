@@ -12,12 +12,12 @@ import {
   FONT_WEIGHT
 } from "@/features/editor/types"
 import { AlignCenter, AlignLeft, AlignRight, ArrowDown, ArrowUp, ChevronDown, Trash2 } from "lucide-react";
-import { isDrawingType, isImageType, isTextType } from "../utils";
+import { isTextType } from "../utils";
 import { FaBold, FaItalic, FaStrikethrough, FaUnderline } from "react-icons/fa";
 import { useState } from "react";
 import { FontSizeInput } from "./font-size-input";
 import { IoColorFilter } from "react-icons/io5";
-import { FaCopy, FaPaste } from "react-icons/fa6";
+import { FaCopy } from "react-icons/fa6";
 
 interface ToolbarProps {
   editor: Editor | undefined;
@@ -58,7 +58,6 @@ export const Toolbar = ({
   
   const isText= isTextType(selectedObjectType);
   const isImage= selectedObjectType === "image";
-  const isDrawing = selectedObjectType === "Path " || "path";
 
   
 

@@ -70,11 +70,6 @@ const buildEditor = ({
       };
     };
 
-    const savePNG = () => {
-      const options = generateSaveOptions();
-
-
-    }
 
     const getWorkspace = () => {
       return canvas.getObjects().find((object) => object.name === "clip");
