@@ -29,11 +29,12 @@ import {
    TRIANGLE_OPTIONS
 } from "@/features/editor/types";
 
-import { createFilter, isTextType } from "@/features/editor/utils";
+import { createFilter, downloadFile, isTextType, transformText } from "@/features/editor/utils";
 import { useCanvasEvents } from "@/features/editor/hooks/use-canvas-events";
 import { useClipboard } from "./use-clipboard";
 import { useHistory } from "./use-history";
 import { useHotkeys } from "./use-hotkeys";
+import { useWindowEvents } from "./use-window-events";
 
 const buildEditor = ({
    canvas,
@@ -70,7 +71,53 @@ const buildEditor = ({
       };
     };
 
-
+    const savePng = () => {
+      const options = generateSaveOptions();
+  
+      canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
+      const dataUrl = canvas.toDataURL(options);
+  
+      downloadFile(dataUrl, "png");
+      autoZoom();
+    };
+  
+    const saveSvg = () => {
+      const options = generateSaveOptions();
+  
+      canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
+      const dataUrl = canvas.toDataURL(options);
+  
+      downloadFile(dataUrl, "svg");
+      autoZoom();
+    };
+  
+    const saveJpeg = () => {
+      const options = generateSaveOptions();
+  
+      canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
+      const dataUrl = canvas.toDataURL(options);
+  
+      downloadFile(dataUrl, "jpg");
+      autoZoom();
+    };
+  
+    const saveJson = async () => {
+      const dataUrl = canvas.toJSON(JSON_KEYS);
+  
+      await transformText(dataUrl.objects);
+      const fileString = `data:text/json;charset=utf-8,${encodeURIComponent(
+        JSON.stringify(dataUrl, null, "\t"),
+      )}`;
+      downloadFile(fileString, "json");
+    };
+  
+    const loadJson = (json: string) => {
+      const data = JSON.parse(json);
+  
+      canvas.loadFromJSON(data, () => {
+        autoZoom();
+      });
+    };
     const getWorkspace = () => {
       return canvas.getObjects().find((object) => object.name === "clip");
     };
@@ -89,6 +136,11 @@ const buildEditor = ({
     };
     
     return {
+      savePng,
+      saveJpeg,
+      saveSvg,
+      saveJson,
+      loadJson,
       canvas,
       strokeWidth,
       selectedObjects,
@@ -560,14 +612,27 @@ export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
   const [fontFamily, setFontFamily] = useState(FONT_FAMILY);
   const [strokeDashArray, setStrokeDashArray] = useState<number[]>(STROKE_DASH_ARRAY);
   
-  const { save, canRedo, canUndo, redo, undo, canvasHistory,  setHistoryIndex} = useHistory({ canvas });
+  const { 
+    save, 
+    canRedo, 
+    canUndo, 
+    redo, 
+    undo, 
+    canvasHistory,  
+    setHistoryIndex
+  } = useHistory({ canvas });
 
-  const { copy, paste } = useClipboard({ canvas });
+  const { 
+    copy, 
+    paste 
+  } = useClipboard({ canvas });
 
-  const { autoZoom } =useAutoResize({ 
+  const { autoZoom } = useAutoResize({ 
     canvas, 
     container 
   });
+
+  useWindowEvents();
   
   useCanvasEvents({
     canvas,

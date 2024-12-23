@@ -23,6 +23,8 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { BsFiletypeJpg, BsFiletypeJson, BsFiletypePng, BsFiletypeSvg } from "react-icons/bs";
+import { useFilePicker } from "use-file-picker";
 
 interface NavbarProps {
   editor: Editor | undefined;
@@ -35,6 +37,19 @@ export const Navbar = ({
   activeTool,
   onChangeActiveTool,
 }: NavbarProps) => {
+  const { openFilePicker } = useFilePicker({
+    accept: ".json",
+    onFilesSuccessfullySelected: ({ plainFiles }: any ) => {
+      if(plainFiles && plainFiles.length > 0) {
+        const file = plainFiles[0];
+        const reader = new FileReader();
+        reader.readAsText(file, "UTF-8");
+        reader.onload = () => {
+          editor?.loadJson(reader.result as string);
+        };
+      };
+    },
+  });
 
   return (
     <nav className="w-full flex items-center p-4 h-[68px] gap-x-8 border-b lg:pl-[34px]">
@@ -49,6 +64,7 @@ export const Navbar = ({
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className="min-w-60">
             <DropdownMenuItem
+              onClick={() => openFilePicker()}
               className="flex items-center gap-x-2"
             >
               <CiFileOn className="size-8" />
@@ -104,8 +120,9 @@ export const Navbar = ({
             <DropdownMenuContent align="end" className="min-w-60">
               <DropdownMenuItem
                 className="flex items-center gap-x-2"
+                onClick={()=> editor?.saveJson()}
               >
-                <CiFileOn className="size-8" />
+                <BsFiletypeJson className="size-8" />
                 <div>
                   <p>JSON</p>
                   <p className="text-xs text-muted-foreground">
@@ -115,8 +132,9 @@ export const Navbar = ({
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="flex items-center gap-x-2"
+                onClick={()=> editor?.savePng()}
               >
-                <CiFileOn className="size-8" />
+                <BsFiletypePng className="size-8" />
                 <div>
                   <p>PNG</p>
                   <p className="text-xs text-muted-foreground">
@@ -126,8 +144,9 @@ export const Navbar = ({
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="flex items-center gap-x-2"
+                onClick={() => editor?.saveJpeg()}
               >
-                <CiFileOn className="size-8" />
+                <BsFiletypeJpg className="size-8" />
                 <div>
                   <p>JPG</p>
                   <p className="text-xs text-muted-foreground">
@@ -137,8 +156,9 @@ export const Navbar = ({
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="flex items-center gap-x-2"
+                onClick={()=> editor?.saveSvg()}
               >
-                <CiFileOn className="size-8" />
+                <BsFiletypeSvg className="size-8" />
                 <div>
                   <p>SVG</p>
                   <p className="text-xs text-muted-foreground">

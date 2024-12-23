@@ -37,6 +37,8 @@
     "tailwindcss-animate": "^1.0.7",
     "unsplash-js": "^7.0.19",
     "uploadthing": "^7.4.1",
+    "use-file-picker": "^2.1.2",
+    "uuidv4": "^6.2.13",
     "zod": "^3.24.1"
   },
   "devDependencies": {
@@ -56,17 +58,12 @@
   "overrides": {
     "@tanstack/react-query": {
       "peerDependencies": {
-        "react": "19.0.0"
-      }
-    },
-    "@radix-ui/*": {
-      "peerDependencies": {
-        "react": "19.0.0"
+        "react": "19.0.0-rc-66855b96-20241106"
       }
     },
     "react-color": {
       "peerDependencies": {
-        "react": "19.0.0"
+        "react": "19.0.0-rc-66855b96-20241106"
       }
     }
   }

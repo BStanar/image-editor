@@ -197,6 +197,12 @@ export type BuildEditorProps = {
 
 export interface Editor {
   canvas: fabric.Canvas;
+  
+  saveJson: () => void,
+  saveSvg: () => void,
+  saveJpeg: () => void,
+  savePng: () => void,
+  loadJson: (json: string) => void,
   strokeWidth: number;
   selectedObjects: fabric.Object[];
   autoZoom: () => void,
