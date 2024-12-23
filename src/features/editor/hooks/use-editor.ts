@@ -57,7 +57,25 @@ const buildEditor = ({
    canUndo,
    canRedo,     
   }: BuildEditorProps): Editor => {
-    
+    const generateSaveOptions = () => {
+      const { width, height, left, top} = getWorkspace() as fabric.Rect;
+      return {
+        name: "Image",
+        format: "png",
+        quality: 1,
+        width,
+        height,
+        left,
+        top,
+      };
+    };
+
+    const savePNG = () => {
+      const options = generateSaveOptions();
+
+
+    }
+
     const getWorkspace = () => {
       return canvas.getObjects().find((object) => object.name === "clip");
     };
