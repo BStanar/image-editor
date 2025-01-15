@@ -25,6 +25,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { BsFiletypeJpg, BsFiletypeJson, BsFiletypePng, BsFiletypeSvg } from "react-icons/bs";
 import { useFilePicker } from "use-file-picker";
+import { Avatar } from "@/components/ui/avatar";
+import { UserButton } from "@/features/auth/components/user-button";
 
 interface NavbarProps {
   editor: Editor | undefined;
@@ -167,6 +169,7 @@ export const Navbar = ({
                 </div>
               </DropdownMenuItem>
             </DropdownMenuContent>
+            <UserButton/>
           </DropdownMenu>
         </div>
       </div>
